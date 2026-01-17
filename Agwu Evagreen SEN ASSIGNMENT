@@ -1,0 +1,68 @@
+# Number Guessing Game
+# Fun console game - guess the number between 1 and 100
+
+import random
+
+def generate_number():
+    """Generate random number between 1 and 100"""
+    return random.randint(1, 100)
+
+def get_guess():
+    """Get valid integer guess from user"""
+    while True:
+        try:
+            guess = int(input("Enter your guess (1-100): "))
+            if 1 <= guess <= 100:
+                return guess
+            else:
+                print("Please enter a number between 1 and 100.")
+        except ValueError:
+            print("That's not a valid number! Please try again.")
+
+def play_game():
+    """Play one round of the guessing game"""
+    print("\n" + "="*40)
+    print("   Welcome to Number Guessing Game!   ")
+    print("="*40)
+    print("I'm thinking of a number between 1 and 100.")
+    print("Can you guess it? Let's go!\n")
+
+    secret_number = generate_number()
+    attempts = 0
+
+    while True:
+        guess = get_guess()
+        attempts += 1
+
+        if guess == secret_number:
+            print(f"\n🎉 Congratulations! You got it!")
+            print(f"The number was {secret_number}")
+            print(f"It took you {attempts} attempts!\n")
+            break
+        elif guess < secret_number:
+            print("Too low! Try a bigger number ↑")
+        else:
+            print("Too high! Try a smaller number ↓")
+
+def main():
+    print("=== NUMBER GUESSING GAME ===\n")
+    
+    while True:
+        play_game()
+        
+        # Ask to play again
+        while True:
+            replay = input("Would you like to play again? (yes/no): ").strip().lower()
+            if replay in ['yes', 'y', '']:
+                break
+            elif replay in ['no', 'n']:
+                print("\nThanks for playing! See you next time! 👋")
+                return
+            else:
+                print("Please type 'yes' or 'no'.")
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\nGame interrupted. Thanks for playing anyway! :)")
